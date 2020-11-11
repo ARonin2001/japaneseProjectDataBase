@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3307
--- Время создания: Ноя 09 2020 г., 22:02
+-- Время создания: Ноя 11 2020 г., 21:41
 -- Версия сервера: 10.3.22-MariaDB
 -- Версия PHP: 7.1.33
 
@@ -51,7 +51,7 @@ INSERT INTO `admin` (`idAdmin`, `name`, `surName`, `fatherName`) VALUES
 CREATE TABLE `autoriz_adm` (
   `idAutoriz_adm` int(11) NOT NULL,
   `log` varchar(45) NOT NULL,
-  `par` int(11) NOT NULL,
+  `par` char(50) NOT NULL,
   `Admin_idAdmin` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -60,8 +60,7 @@ CREATE TABLE `autoriz_adm` (
 --
 
 INSERT INTO `autoriz_adm` (`idAutoriz_adm`, `log`, `par`, `Admin_idAdmin`) VALUES
-(1, '123123', 123123, 1),
-(2, 'Hi', 123123, 2);
+(1, '123123', '202cb962ac59075b964b07152d234b70', 1);
 
 -- --------------------------------------------------------
 
@@ -85,7 +84,7 @@ CREATE TABLE `autoriz_kl` (
 CREATE TABLE `autoriz_men` (
   `idAutoriz_men` int(11) NOT NULL,
   `log` varchar(45) NOT NULL,
-  `par` int(11) NOT NULL,
+  `par` varchar(50) NOT NULL,
   `meneger_idmeneger` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -94,8 +93,9 @@ CREATE TABLE `autoriz_men` (
 --
 
 INSERT INTO `autoriz_men` (`idAutoriz_men`, `log`, `par`, `meneger_idmeneger`) VALUES
-(1, '542', 542, 1),
-(2, '789', 789, 2);
+(1, '542', '542', 1),
+(6, 'sdfs@gmailc.om', 'YoParol', 20),
+(7, 'shura.pronin.2001@mail.ru', 'proninPar', 21);
 
 -- --------------------------------------------------------
 
@@ -106,9 +106,18 @@ INSERT INTO `autoriz_men` (`idAutoriz_men`, `log`, `par`, `meneger_idmeneger`) V
 CREATE TABLE `autoriz_op` (
   `idAutoriz_op` int(11) NOT NULL,
   `log` varchar(45) NOT NULL,
-  `par` int(11) NOT NULL,
+  `par` char(50) NOT NULL,
   `operator_idoperator` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `autoriz_op`
+--
+
+INSERT INTO `autoriz_op` (`idAutoriz_op`, `log`, `par`, `operator_idoperator`) VALUES
+(1, 'vadimbitukov24.@gmail.com', 'bitPar', 11),
+(2, 'ыавыаыав', 'MD5(paroll)', 12),
+(3, 'ывавыа', '84d9cfc2f395ce883a41d7ffc1bbcf4e', 14);
 
 -- --------------------------------------------------------
 
@@ -195,22 +204,25 @@ CREATE TABLE `meneger` (
   `surName` varchar(30) NOT NULL,
   `fatherName` varchar(30) DEFAULT NULL,
   `mail` varchar(45) NOT NULL,
-  `phone` varchar(15) NOT NULL,
+  `phone` varchar(25) NOT NULL,
   `datePost` date NOT NULL,
   `dateOtstavki` date DEFAULT NULL,
   `status` tinytext NOT NULL,
   `polojenie` tinytext NOT NULL,
   `gender` char(1) NOT NULL,
-  `dateBirth` date NOT NULL
+  `dateBirth` date NOT NULL,
+  `salary` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `meneger`
 --
 
-INSERT INTO `meneger` (`idmeneger`, `name`, `surName`, `fatherName`, `mail`, `phone`, `datePost`, `dateOtstavki`, `status`, `polojenie`, `gender`, `dateBirth`) VALUES
-(1, 'Sanya', 'Who', 'Girls', 'sdfs@gmailc.om', '2342342', '2020-11-01', NULL, 'dfgdf', 'dfgdgf', 'a', '1995-11-17'),
-(2, 'Alexandr', 'Pronin', 'Olegovich', 'sdffd@gamil.com', '2423432423', '2020-11-03', NULL, 'Активен', 'Работает', 'm', '1999-01-12');
+INSERT INTO `meneger` (`idmeneger`, `name`, `surName`, `fatherName`, `mail`, `phone`, `datePost`, `dateOtstavki`, `status`, `polojenie`, `gender`, `dateBirth`, `salary`) VALUES
+(1, 'Sanya', 'Who', 'Girls', 'sdfs@gmailc.om', '2342342', '2020-11-01', NULL, 'dfgdf', 'dfgdgf', 'a', '1995-11-17', 0),
+(2, 'Alexandr', 'Pronin', 'Olegovich', 'sdffd@gamil.com', '2423432423', '2020-11-03', NULL, 'Активен', 'Работает', 'm', '1999-01-12', 0),
+(20, 'Юрий', 'Пуйгин', 'Алексеевич', 'puygin.2001@mail.ru', '+7(342)342-34-34', '2020-11-11', NULL, 'Работает', 'активен', 'm', '2001-09-27', 0),
+(21, 'Александр', 'Пронин', 'Олегович', 'shura.pronin.2001@mail.ru', '+7(953)986-59-30', '2020-11-11', NULL, 'Работает', 'активен', 'm', '2001-11-25', 0);
 
 -- --------------------------------------------------------
 
@@ -224,24 +236,27 @@ CREATE TABLE `operator` (
   `surName` varchar(30) NOT NULL,
   `fatherName` varchar(30) DEFAULT NULL,
   `mail` varchar(45) NOT NULL,
-  `phone` varchar(15) NOT NULL,
+  `phone` varchar(30) NOT NULL,
   `gender` char(1) NOT NULL,
   `datePost` date NOT NULL,
   `dateOtstavki` date DEFAULT NULL,
   `dateBirth` date NOT NULL,
   `status` tinytext NOT NULL,
-  `polojenie` tinytext NOT NULL
+  `polojenie` tinytext NOT NULL,
+  `salary` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `operator`
 --
 
-INSERT INTO `operator` (`idoperator`, `name`, `surName`, `fatherName`, `mail`, `phone`, `gender`, `datePost`, `dateOtstavki`, `dateBirth`, `status`, `polojenie`) VALUES
-(1, 'Lex', 'Man', 'Jefirson', 'Lex.sdf@mail.ru', '23423423', 'm', '2020-11-03', NULL, '2000-01-01', 'ggff', 'ggff'),
-(2, 'Hey', 'Men', 'WhatAreYouDoing', 'sdfds@gmail.com', '32434234', 'm', '2020-11-01', '2020-11-02', '1999-01-14', 'sdfsdf', 'sdfsdf'),
-(3, 'i', 'f', 'd', 'sdf', '468485', 'm', '2020-11-01', NULL, '2003-04-05', 'sdf', 'sdf'),
-(4, 'dfds', 'erf', 'wfe', 'sdfdsf', '124234', 'w', '2020-11-03', NULL, '2005-03-04', 'sdf', 'sdfd');
+INSERT INTO `operator` (`idoperator`, `name`, `surName`, `fatherName`, `mail`, `phone`, `gender`, `datePost`, `dateOtstavki`, `dateBirth`, `status`, `polojenie`, `salary`) VALUES
+(1, 'Lex', 'Man', 'Jefirson', 'Lex.sdf@mail.ru', '23423423', 'm', '2020-11-03', NULL, '2000-01-01', 'ggff', 'ggff', 0),
+(2, 'Hey', 'Men', 'WhatAreYouDoing', 'sdfds@gmail.com', '32434234', 'm', '2020-11-01', '2020-11-02', '1999-01-14', 'sdfsdf', 'sdfsdf', 0),
+(11, 'Вадим', 'Битюков', 'Игоревич', 'vadimbitukov24.@gmail.com', '+7(234)324-32-44', 'm', '2020-11-11', NULL, '2002-11-19', 'Работает', 'активен', 0),
+(12, 'АААААААА', 'ууууууу', 'ккккк', 'ыавыаыав', '+7(324)324-23-43', 'm', '2020-11-11', NULL, '2020-10-30', 'Работает', 'активен', 0),
+(13, 'ываыва', 'ыавыва', 'ыва', 'ывавыа', '+7(534)543-53-45', 'm', '2020-11-11', NULL, '2020-11-01', 'Работает', 'активен', 0),
+(14, 'ывавыа', 'ыывавыа', 'аываа', 'ыаыва', '+7(324)234-32-43', 'w', '2020-11-11', NULL, '2020-11-05', 'Работает', 'активен', 0);
 
 -- --------------------------------------------------------
 
@@ -418,13 +433,13 @@ ALTER TABLE `autoriz_kl`
 -- AUTO_INCREMENT для таблицы `autoriz_men`
 --
 ALTER TABLE `autoriz_men`
-  MODIFY `idAutoriz_men` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idAutoriz_men` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `autoriz_op`
 --
 ALTER TABLE `autoriz_op`
-  MODIFY `idAutoriz_op` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAutoriz_op` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `customer`
@@ -448,13 +463,13 @@ ALTER TABLE `longprogram`
 -- AUTO_INCREMENT для таблицы `meneger`
 --
 ALTER TABLE `meneger`
-  MODIFY `idmeneger` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idmeneger` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT для таблицы `operator`
 --
 ALTER TABLE `operator`
-  MODIFY `idoperator` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idoperator` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `schools`
